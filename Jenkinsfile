@@ -10,8 +10,10 @@ pipeline {
         STG_APP_ENDPOINT = "ip10-0-4-3-ceibfagmjkegg872c1m0-81.direct.docker.labs.eazytraining.fr"
         PROD_APP_ENDPOINT = "ip10-0-4-3-ceibfagmjkegg872c1m0-80.direct.docker.labs.eazytraining.fr"
         INTERNAL_PORT = "3000"
-       EXTERNAL_PORT = "${PORT_EXPOSED}" 
-       CONTAINER_IMAGE = "${ID_DOCKER}/${IMAGE_NAME}:${IMAGE_TAG}"
+        EXTERNAL_PORT = 80
+        STG_EXTERNAL_PORT = 81
+        PROD_EXTERNAL_PORT = 80
+        CONTAINER_IMAGE = "${ID_DOCKER}/${IMAGE_NAME}:${IMAGE_TAG}"
     }    
     agent none
     stages {
@@ -94,7 +96,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        echo  {\\"your_name\\":\\"${APP_NAME}\\",\\"container_image\\":\\"${CONTAINER_IMAGE}\\", \\"external_port\\":\\"${EXTERNAL_PORT}\\", \\"internal_port\\":\\"${INTERNAL_PORT}\\"}  > data.json 
+                        echo  {\\"your_name\\":\\"${APP_NAME}\\",\\"container_image\\":\\"${CONTAINER_IMAGE}\\", \\"external_port\\":\\"${STG_EXTERNAL_PORT}\\", \\"internal_port\\":\\"${INTERNAL_PORT}\\"}  > data.json 
                         curl -X POST http://${API_ENDPOINT}/staging -H 'Content-Type: application/json'  --data-binary @data.json 
                     """
                     
@@ -110,7 +112,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        curl -X POST http://${API_ENDPOINT}/prod -H 'Content-Type: application/json' -d '{"your_name":"${APP_NAME}","container_image":"${CONTAINER_IMAGE}", "external_port":"${EXTERNAL_PORT}", "internal_port":"${INTERNAL_PORT}"}'
+                        curl -X POST http://${API_ENDPOINT}/prod -H 'Content-Type: application/json' -d '{"your_name":"${APP_NAME}","container_image":"${CONTAINER_IMAGE}", "external_port":"${PROD_EXTERNAL_PORT}", "internal_port":"${INTERNAL_PORT}"}'
                     """
                     
                 }
