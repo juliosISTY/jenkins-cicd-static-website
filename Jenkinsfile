@@ -6,9 +6,9 @@ pipeline {
         APP_NAME = "jules"
         STAGING = "juliosISTY-staging"
         PRODUCTION = "juliosISTY-production"
-        API_ENDPOINT = "ip10-0-4-3-ceibfagmjkegg872c1m0-1996.direct.docker.labs.eazytraining.fr"
-        STG_APP_ENDPOINT = "ip10-0-4-3-ceibfagmjkegg872c1m0-81.direct.docker.labs.eazytraining.fr"
-        PROD_APP_ENDPOINT = "ip10-0-4-3-ceibfagmjkegg872c1m0-80.direct.docker.labs.eazytraining.fr"
+        API_ENDPOINT = "ip10-0-1-3-ceidnr0mjkegg872c1r0-1996.direct.docker.labs.eazytraining.fr"
+        STG_APP_ENDPOINT = "ip10-0-1-3-ceidnr0mjkegg872c1r0-81.direct.docker.labs.eazytraining.fr"
+        PROD_APP_ENDPOINT = "ip10-0-1-3-ceidnr0mjkegg872c1r0-80.direct.docker.labs.eazytraining.fr"
         INTERNAL_PORT = "3000"
         EXTERNAL_PORT = 80
         STG_EXTERNAL_PORT = 81
@@ -32,7 +32,7 @@ pipeline {
                     sh '''
                         echo "Clean Environment"
                         docker rm -f $IMAGE_NAME || echo "container does not exist"
-                        docker run -d -p ${EXTERNAL_PORT}:${INTERNAL_PORT} -e PORT=${INTERNAL_PORT} --name $IMAGE_NAME ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
+                        docker run -d -p ${EXTERNAL_PORT}:${INTERNAL_PORT} --name $IMAGE_NAME ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
                         sleep 5
                     '''
                     
