@@ -30,7 +30,7 @@ pipeline {
                     sh '''
                         echo "Clean Environment"
                         docker rm -f $IMAGE_NAME || echo "container does not exist"
-                        docker run -d -p ${EXTERNAL_PORT}:${INTERNAL_PORT} -e PORT=${INTERNAL_PORT}--name $IMAGE_NAME ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
+                        docker run -d -p ${EXTERNAL_PORT}:${INTERNAL_PORT} -e PORT=${INTERNAL_PORT} --name $IMAGE_NAME ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
                         sleep 5
                     '''
                     
