@@ -27,7 +27,7 @@ stages:
 before_script:
   - echo "Welcome to mini Gitlab-CI mini-project"
 
-.job A:
+job A:
   stage: Build image
   script:
     - docker build -t static_website .
@@ -39,7 +39,7 @@ before_script:
     when: on_success
     expire_in: 30 days
 
-.job B:
+job B:
   stage: Run image
   script:
     - docker load < static_website.tar
@@ -48,7 +48,7 @@ before_script:
     - sleep 5
     - curl "http://docker:${EXTERNAL_PORT}" | grep -i "Dimension"
 
-.job C:
+job C:
   stage: Release image
   script:
     - docker load < static_website.tar
